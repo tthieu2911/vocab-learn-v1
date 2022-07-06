@@ -100,12 +100,27 @@ const Kanji = (kanjiProps) => {
     // Suffle imported dictionary
     var _suffledDict = suffleDictionary(_curDict);
 
-    // Slice with specific number
+    // Slice into new Dictionary w specific number
     var _arrWordDictToDisplay = [];
-    if (inputNumber <= _curDict.length) {
-      _arrWordDictToDisplay = _suffledDict.slice(0, inputNumber);
-    } else {
-      _arrWordDictToDisplay = _suffledDict;
+    var _intNumber = inputNumber===""? 0 : parseInt(inputNumber);
+
+    switch(true){
+      case _intNumber === 0 :{
+        _arrWordDictToDisplay = _suffledDict;
+        break;
+      }
+      case _intNumber !== 0 && _intNumber <= _curDict.length :{
+        _arrWordDictToDisplay = _suffledDict.slice(0, _intNumber);
+        break;
+      }
+      case _intNumber !== 0 && _intNumber > _curDict.length :{
+        _arrWordDictToDisplay = _suffledDict;
+        break;
+      }
+      default:{
+        _arrWordDictToDisplay = _suffledDict;
+        break;
+      }
     }
 
     // Create Kanji list
