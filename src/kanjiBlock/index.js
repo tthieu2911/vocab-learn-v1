@@ -64,10 +64,16 @@ const KanjiBlock = (blockProps) => {
         
         // move to next word
         _iptElement.parent().parent().next().children().eq(1).find('input').focus();
+
+        // pass success
+        blockProps.onKeyDown("correct");
       }
       else {
         _iptElement.removeClass("text-success").addClass("text-danger");
         _iptElement.parent().find('.result_kanji').removeClass("text-success").addClass("text-danger").text("Failed");
+
+        // pass failed
+        blockProps.onKeyDown("failed");
       }
     }
   }

@@ -16,6 +16,8 @@ const Kanji = (kanjiProps) => {
 
   const [kanjiList, setKanjiList] = useState('');
 
+  var vocabDictionary = [];
+
   function mixKanjiWord() {
     // mix Kanji blocks
     var _blocks = $(".kanji_block");
@@ -37,11 +39,23 @@ const Kanji = (kanjiProps) => {
     $('.result_kanji').html('');
   }
 
-  var _curDict = [];
+  var updateResult = function (value) {
+    // value = data passed from Children 's function: onKeyDown = {onEnterWords}
+
+    var _correctInput = $(':input.text-success');
+    var _failedInput = $(':input.text-danger');
+
+    $('#correctCount').text(_correctInput.length);
+    $('#failedCount').text(_failedInput.length);
+
+  }
 
   const loadData = () => {
+    // init data
+    $('#correctCount').text("0");
+    $('#failedCount').text("0");
+  
     var _inptNoOfWord = $("#total");
-
     // jquery
     //    _inptNoOfWord.val()
     // Or _inptNoOfWord[0].val
@@ -54,7 +68,7 @@ const Kanji = (kanjiProps) => {
   // Import data from local file
   function importData(fileName, inputNumber) {
     $.get(fileName, function (data, res) {
-      _curDict = [];
+      vocabDictionary = [];
 
       if (res) {
         var lines = data.split("\r\n");
@@ -79,7 +93,7 @@ const Kanji = (kanjiProps) => {
           }
 
           // Push to Dictionary
-          _curDict.push(wordsObj);
+          vocabDictionary.push(wordsObj);
           wordsObj = {};
         }
 
@@ -98,7 +112,7 @@ const Kanji = (kanjiProps) => {
 
   function displayWord(inputNumber) {
     // Suffle imported dictionary
-    var _suffledDict = suffleDictionary(_curDict);
+    var _suffledDict = suffleDictionary(vocabDictionary);
 
     // Slice into new Dictionary w specific number
     var _arrWordDictToDisplay = [];
@@ -109,11 +123,11 @@ const Kanji = (kanjiProps) => {
         _arrWordDictToDisplay = _suffledDict;
         break;
       }
-      case _intNumber !== 0 && _intNumber <= _curDict.length :{
+      case _intNumber !== 0 && _intNumber <= vocabDictionary.length :{
         _arrWordDictToDisplay = _suffledDict.slice(0, _intNumber);
         break;
       }
-      case _intNumber !== 0 && _intNumber > _curDict.length :{
+      case _intNumber !== 0 && _intNumber > vocabDictionary.length :{
         _arrWordDictToDisplay = _suffledDict;
         break;
       }
@@ -143,6 +157,7 @@ const Kanji = (kanjiProps) => {
     return newDict;
   }
 
+//#region Rendering
   return (
     <div className="App">
       <header>
@@ -202,7 +217,7 @@ const Kanji = (kanjiProps) => {
                     <span className="text-success">Correct</span>
                   </div>
                   <div className="col-md-6 col-sm-6 col-6 test-count">
-                    <span id="correctCount">0</span>
+                    <span id="correctCount"></span>
                   </div>
                 </div>
                 <div className="row">
@@ -210,7 +225,7 @@ const Kanji = (kanjiProps) => {
                     <span className="text-danger">Failed</span>
                   </div>
                   <div className="col-md-6 col-sm-6 col-6 test-count">
-                    <span id="failedCound">0</span>
+                    <span id="failedCount"></span>
                   </div>
                 </div>
               </div>
@@ -226,7 +241,7 @@ const Kanji = (kanjiProps) => {
             {/* <!-- Kanji list --> */}
             {kanjiList.length !== 0 &&
               kanjiList.map((item, index) =>
-                <KanjiBlock key={index} block={item} />
+                <KanjiBlock key={index} block={item} onKeyDown={updateResult}/>
               )
             }
           </div>
@@ -234,6 +249,7 @@ const Kanji = (kanjiProps) => {
       </div>
     </div>
   );
+//#endregion
 }
 
 export default Kanji;
