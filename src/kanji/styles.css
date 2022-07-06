@@ -4,9 +4,45 @@ h1 {
     text-align: center;
 }
 
+#kanji_header{
+    background-color: #282c34;
+    padding-top: 1vh;
+    min-height: 16vh;
+    color: white;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+#kanji_area{
+    margin-top: auto;
+}
+
 .btn {
     text-align: center;
     vertical-align: middle;
     align-items: center;
 }
 
+.button-fields{
+    margin-top: 1vh;
+    padding: 2vh;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.button-fields input{
+    margin-left: 50%;
+    margin-bottom: 1.5vh;
+    width: 60%;
+    min-height: fit-content;
+}
+
+.test-result{
+    text-align: right;
+}
+
+.test-count{
+    text-align: left;
+}

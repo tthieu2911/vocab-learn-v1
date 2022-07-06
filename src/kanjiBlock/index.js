@@ -42,8 +42,6 @@ const KanjiBlock = (blockProps) => {
         break;
       }
     }
-
-    //lastInput = $($this);
   }
 
   const checkWord = function (input) {
@@ -53,9 +51,9 @@ const KanjiBlock = (blockProps) => {
     var _arrExpectedResult = [];
     
     if (_value !== "") {
+      // attr() return as String
       _expectedResult = _iptElement.parent().find('.result_kanji').attr('result').toLowerCase();
       _arrExpectedResult = _expectedResult.split(",");
-
 
       if (_arrExpectedResult.indexOf(_value.toLowerCase()) !== -1) {
         // input
