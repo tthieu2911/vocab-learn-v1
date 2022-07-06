@@ -1,0 +1,32 @@
+/* Kanji */
+.row.kanji {
+    display: block;
+}
+
+.kanji_block {
+    border: 0.1px solid;
+    padding: 12px;
+}
+
+.kanji_contain {
+    border: 1px solid;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 35px;
+    font-weight: bold;
+    background-color: #F5F5F5;
+}
+
+.form-control {
+    height: 35px;
+    margin-top: 10px;
+}
+
+.kanji_result_contain {
+    margin-top: 7px;
+    font-size: 15px;
+}
+
+.dvKanjiResult {
+    height: 40px;
+}
