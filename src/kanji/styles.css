@@ -4,23 +4,34 @@ h1 {
     text-align: center;
 }
 
+#kanji_div {
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
 #kanji_header {
-    background-color: #282c34;
+    /* background-color: rgb(86, 198, 217); */
     padding-top: 1vh;
     min-height: 16vh;
-    color: white;
+    color: black;
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
     z-index: 1020;
     overflow: hidden;
-    top: 0;
-    width: 100%;
+    border-radius: 10px;
+    border: 1px solid;
+    border-color: rgb(0, 0, 0);
+    box-shadow: 5px 5px 5px lightblue;
 }
 
 #kanji_area {
     margin-top: auto;
-    /* padding-top: 60px; */
+    padding-top: 5px;
+    padding-left: 2%;
+    padding-right: 2%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 65vh;
 }
 
 .btn {
@@ -36,11 +47,37 @@ h1 {
     vertical-align: middle;
 }
 
-.button-fields input {
-    margin-left: 50%;
-    margin-bottom: 1.5vh;
-    width: 60%;
-    min-height: fit-content;
+.button-fields div {
+    align-items: center;
+    vertical-align: middle;
+}
+
+
+.load-data-criteria {
+    align-items: center;
+    vertical-align: middle;
+}
+
+.load-data-criteria.no-of-words {
+    display: flex;
+    flex-direction: row;
+}
+
+.load-data-criteria input {
+    margin-left: 15px;
+    width: 35%;
+    min-height: 35px;
+    min-width: 50px;
+    border-radius: 10px;
+    border: 0.3px solid;
+}
+
+.load-data-criteria select {
+    margin-left: 15px;
+    width: 30%;
+    min-height: 35px;
+    min-width: 50px;
+    border-radius: 10px;
 }
 
 .test-result {

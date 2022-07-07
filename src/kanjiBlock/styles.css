@@ -5,11 +5,16 @@
 
 .kanji_block {
     border: 0.1px solid;
+    border-radius: 5px;
     padding: 12px;
+    /* flex: auto; */
+    flex-direction: row;
+    box-shadow: 1px 1px 5px rgb(65, 121, 140);
 }
 
 .kanji_contain {
     border: 1px solid;
+    border-radius: 5px;
     text-align: center;
     vertical-align: middle;
     font-size: 35px;
@@ -20,6 +25,7 @@
 .form-control {
     height: 35px;
     margin-top: 10px;
+    border-radius: 5px;
 }
 
 .kanji_result_contain {

@@ -166,7 +166,7 @@ const KanjiBlock = (blockProps) => {
   }
 
   return (
-    <div className='col-6 col-md-2 kanji_block'>
+    <div className='col-6 col-md-2 col-sm-3 kanji_block'>
       <div className='kanji_contain'>
         <span>{kanji}</span>
       </div>

@@ -35,7 +35,7 @@ const Kanji = (kanjiProps) => {
   }
 
   function clearAll() {
-    $(':input').val("");
+    $('#kanji_area:input').val("");
     $('.result_kanji').html('');
   }
 
@@ -58,13 +58,38 @@ const Kanji = (kanjiProps) => {
     // clear input
     clearAll();
 
-    var _inptNoOfWord = $("#total");
     // jquery
     //    _inptNoOfWord.val()
     // Or _inptNoOfWord[0].val
-    var _intNumber = _inptNoOfWord.val();
+    var _intNumber = $("#total").val();
+    var _intLevel = $("#level option:selected").val();
+    var _strfileName = "";
 
-    importData('file/kanji4-1.txt', _intNumber);
+    switch (parseInt(_intLevel)) {
+      case 5:
+        _strfileName = "file/kanji-5.txt";
+        break;
+      case 4:
+        _strfileName = "file/kanji-4.txt";
+        break;
+      case 3:
+        _strfileName = "file/kanji-3.txt";
+        break;
+      case 2:
+        _strfileName = "file/kanji-2.txt";
+        break;
+      case 1:
+        _strfileName = "file/kanji-1.txt";
+        break;
+      default:
+        _strfileName = "file/kanji-5.txt";
+        break;
+    }
+
+    // Import data from text file
+    importData(_strfileName, _intNumber);
+
+    //importData('file/kanji4-1.txt', _intNumber);
     //importData('file/test.txt', _intNumber);
   }
 
@@ -185,14 +210,22 @@ const Kanji = (kanjiProps) => {
     return newDict;
   }
 
+  const onLoadHandler = function () {
+    $('.container-fluid').each(element => {
+      $(this).addClass('px-0');
+    });
+    $('#correctCount').text("0");
+    $('#failedCount').text("0");
+  }
+
   //#region Rendering
   return (
-    <div className="App">
+    <div className="App" onLoad={onLoadHandler}>
       <header>
       </header>
-      <div className="container-fluid" >
-        <div className="container-fluid App-header" >
-          <div className="container-fluid row">
+      <div className="container-fluid">
+        <div className="container-fluid px-0 App-header" >
+          <div className="row">
             <div className="col-md-2 col-sm-2 col-2"></div>
             <div className="col-md-8 col-sm-8 col-8 row" >
               <div className="col-md-4 col-sm-4 col-4"><img src={logo} className="App-logo" alt="logo" /></div>
@@ -204,42 +237,55 @@ const Kanji = (kanjiProps) => {
         </div>
       </div>
 
-      <div className="container-fluid" id="kanji_div">
-        <div className="container-fluid" id="kanji_header">
-          <div className="container-fluid row">
+      <div className="container-fluid" id="kanji_div" >
+        <div className="container-fluid px-0" id="kanji_header">
+          <div className="row">
             <div className="col-md-2 col-sm-2 col-2"></div>
-            <div className="col-md-8 col-sm-8 col-8 row">
-              <h3 className="text-center"> KANJI MODE </h3>
+            <div className="col-md-8 col-sm-8 col-8">
+              <h2 className="text-center"> KANJI MODE </h2>
               <div className="text-center">
                 <a href="/" title="Ctrl - gợi ý; Enter - Kiểm tra kết quả; Phím mũi tên - Chuyển ô; Tab - Chuyển ô và Kiếm tra kết quả">Hint.</a>
               </div>
             </div>
             <div className="col-md-2 col-sm-2 col-2"></div>
           </div>
-          <div className="container-fluid row">
-            <div className="container-fluid row button-fields">
-              <div className="col-md-3 col-sm-3 col-3">
-                <input className='form-control' id='total' placeholder='No of words' type="number" min="1" />
+          <div className="container-fluid px-0 button-fields" id="buttons-area">
+            <div className="row">
+              <div className="col-md-6 col-sm-6 col-6 row load-data-criteria">
+                <div className="col-md-4 col-sm-4 col-4 level-select">
+                  Level :
+                  <select id="level">
+                    <option value="5">N5</option>
+                    <option value="4">N4</option>
+                    <option value="3">N3</option>
+                    <option value="2">N2</option>
+                    <option value="1">N1</option>
+                  </select>
+                </div>
+                <div className="col-md-4 col-sm-4 col-4 no-of-words">
+                  No of Words :
+                  <input className='form-control-inline' id='total' type="number" min="1" />
+                </div>
+                <div className="col-md-4 col-sm-4 col-4 btn-load-data">
+                  <button type="button" className="btn btn-primary btn-sm btn-warning" onClick={() => loadData()}>
+                    <FaFileUpload />
+                    <span> Load data </span>
+                  </button>
+                </div>
               </div>
-              <div className="col-md-2 col-sm-2 col-2 ">
-                <button type="button" className="btn btn-primary btn-sm btn-warning" onClick={() => loadData()}>
-                  <FaFileUpload />
-                  <span> Load data </span>
-                </button>
-              </div>
-              <div className="col-md-2 col-sm-2 col-2 ">
+              <div className="col-md-2 col-sm-2 col-2">
                 <button type="button" className="btn btn-primary btn-sm btn-success" onClick={() => mixKanjiWord()}>
                   <FaRandom />
                   <span> Mix Words </span>
                 </button>
               </div>
-              <div className="col-md-2 col-sm-2 col-2 ">
+              <div className="col-md-2 col-sm-2 col-2">
                 <button type="button" className="btn btn-primary btn-sm btn-edit" onClick={() => clearAll()}>
                   <FaTrash />
                   <span> Clear All </span>
                 </button>
               </div>
-              <div className="col-md-3 col-sm-3 col-3 row">
+              <div className="col-md-2 col-sm-2 col-2 px-0">
                 <div className="row">
                   <div className="col-md-6 col-sm-6 col-6 test-result">
                     <span className="text-success">Correct</span>
@@ -262,9 +308,10 @@ const Kanji = (kanjiProps) => {
         </div>
       </div>
 
-      <hr />
-      <div className="container-fluid">
-        <div className="container-fluid row kanji" id="kanji_area">
+
+      <div className="container-fluid px-0 ">
+        <hr />
+        <div id="kanji_area">
           <div className="row">
             {/* <!-- Kanji list --> */}
             {kanjiList.length !== 0 &&
