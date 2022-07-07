@@ -64,8 +64,8 @@ const Kanji = (kanjiProps) => {
     // Or _inptNoOfWord[0].val
     var _intNumber = _inptNoOfWord.val();
 
-    //importData('file/kanji4-1.txt', _intNumber);
-    importData('file/test.txt', _intNumber);
+    importData('file/kanji4-1.txt', _intNumber);
+    //importData('file/test.txt', _intNumber);
   }
 
   // Import data from local file
@@ -84,40 +84,17 @@ const Kanji = (kanjiProps) => {
             wordsObj = {
               "kanji": words[0],
               "romaji": "",
-              "english": splitWords(words[1]),
+              "english": words[1],
               "ignore": ""
             }
-          }
-          else {
+          } else {
             // Handle '(' .. ')' --> to be ignored
-            if (words[2].lastIndexOf('(') !== -1 && words[2].lastIndexOf(')') !== -1) {
-
-              // get all Indexes of Open & Close charater
-              var index = 0;
-              var indicesOpen = [];
-              for (index = 0; index < words[2].length; index++) {
-                if (words[2][index] === "(") indicesOpen.push(index);
-              }
-              var indicesClose = [];
-              for (index = 0; index < words[2].length; index++) {
-                if (words[2][index] === ")") indicesClose.push(index);
-              }
-
-              // Get list of ignore phrase
-              // Open and Close charater should have same total
-              for (index = 0; index < indicesOpen.length; index++) {
-                if (index + 1 < indicesOpen.length) {
-                  ignoreList.push((words[2].slice(indicesOpen[index], indicesClose[index] + 1)) + ", ");
-                } else {
-                  ignoreList.push((words[2].slice(indicesOpen[index], indicesClose[index] + 1)));
-                }
-              }
-            }
+            ignoreList = hanldeIgnoreList(words[2]);
 
             wordsObj = {
               "kanji": words[0],
               "romaji": words[1],
-              "english": splitWords(words[2]),
+              "english": words[2],
               "ignore": ignoreList
             }
             ignoreList = [];
@@ -133,12 +110,32 @@ const Kanji = (kanjiProps) => {
     });
   }
 
-  function splitWords(words) {
-    var arr = words.split(",").map(function (item) {
-      return item.trim();
-    })
+  function hanldeIgnoreList(srcString) {
+    var resArray = [];
+    if (srcString.lastIndexOf('(') !== -1 && srcString.lastIndexOf(')') !== -1) {
 
-    return arr;
+      // get all Indexes of Open & Close charater
+      var index = 0;
+      var indicesOpen = [];
+      for (index = 0; index < srcString.length; index++) {
+        if (srcString[index] === "(") indicesOpen.push(index);
+      }
+      var indicesClose = [];
+      for (index = 0; index < srcString.length; index++) {
+        if (srcString[index] === ")") indicesClose.push(index);
+      }
+
+      // Get list of ignore phrase
+      // Open and Close charater should have same total
+      for (index = 0; index < indicesOpen.length; index++) {
+        if (index + 1 < indicesOpen.length) {
+          resArray.push((srcString.slice(indicesOpen[index], indicesClose[index] + 1)) + ", ");
+        } else {
+          resArray.push((srcString.slice(indicesOpen[index], indicesClose[index] + 1)));
+        }
+      }
+    }
+    return resArray;
   }
 
   function displayWord(inputNumber) {

@@ -4,7 +4,7 @@ h1 {
     text-align: center;
 }
 
-#kanji_header{
+#kanji_header {
     background-color: #282c34;
     padding-top: 1vh;
     min-height: 16vh;
@@ -13,10 +13,14 @@ h1 {
     position: sticky;
     top: 0;
     z-index: 1020;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
 }
 
-#kanji_area{
+#kanji_area {
     margin-top: auto;
+    /* padding-top: 60px; */
 }
 
 .btn {
@@ -25,24 +29,24 @@ h1 {
     align-items: center;
 }
 
-.button-fields{
+.button-fields {
     margin-top: 1vh;
     padding: 2vh;
     align-items: center;
     vertical-align: middle;
 }
 
-.button-fields input{
+.button-fields input {
     margin-left: 50%;
     margin-bottom: 1.5vh;
     width: 60%;
     min-height: fit-content;
 }
 
-.test-result{
+.test-result {
     text-align: right;
 }
 
-.test-count{
+.test-count {
     text-align: left;
 }

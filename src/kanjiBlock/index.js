@@ -68,8 +68,8 @@ const KanjiBlock = (blockProps) => {
 
       // Handle ignore list
       // Return array to be check against input value
-      _arrNonToVerbExpectedResult = finalizeExpectedResult(input,_strNonToVerbResult,_arrNonToVerbExpectedResult);
-      _arrToVerbExpectedResult = finalizeExpectedResult(input,_strToVerbResult,_arrToVerbExpectedResult);
+      _arrNonToVerbExpectedResult = finalizeExpectedResult(input,_strNonToVerbResult);
+      _arrToVerbExpectedResult = finalizeExpectedResult(input,_strToVerbResult);
 
       // Return result
       _blResult = _arrNonToVerbExpectedResult.indexOf(_value.toLowerCase()) !== -1 
@@ -78,22 +78,6 @@ const KanjiBlock = (blockProps) => {
       // Display result on block
       displayResult(input, _blResult);
     }
-  }
-
-  // Minus sub-string
-  const minusSubString = function (srcArray, destString) {
-    for (var i = 0; i < srcArray.length; i++) {
-      for (var j = 0; j < destString.length; j++) {
-        if (srcArray[i] !== "") {
-          var sliced = destString.slice(j, j + srcArray[i].length);
-          if (sliced === srcArray[i]) {
-            destString = destString.slice(0, j) + destString.slice(j + srcArray[i].length + 1, destString.length);
-            j += srcArray[i].length;
-          }
-        }
-      }
-    }
-    return destString;
   }
 
   // Display result on block
@@ -123,9 +107,10 @@ const KanjiBlock = (blockProps) => {
     }
   }
 
-  const finalizeExpectedResult = function(input, srcString, destArray) {
+  const finalizeExpectedResult = function(input, srcString) {
     var _strIgnore = $(input).parent().find('.ignore-list').text();
     var _arrTempIgnore = [];
+    var _resArray = [];
     if (_strIgnore !== "") {
       if (_strIgnore.indexOf(",") !== -1) {
         _arrTempIgnore = _strIgnore.split(",").map(function (item) {
@@ -141,11 +126,28 @@ const KanjiBlock = (blockProps) => {
     }
 
     // Array to be check against input value
-    destArray = srcString.split(",").map(function (item) {
+    _resArray = srcString.split(",").map(function (item) {
       return item.trim();
     });
 
-    return destArray;
+    return _resArray;
+  }
+
+  
+  // Minus sub-string
+  const minusSubString = function (srcArray, destString) {
+    for (var i = 0; i < srcArray.length; i++) {
+      for (var j = 0; j < destString.length; j++) {
+        if (srcArray[i] !== "") {
+          var sliced = destString.slice(j, j + srcArray[i].length);
+          if (sliced === srcArray[i]) {
+            destString = destString.slice(0, j) + destString.slice(j + srcArray[i].length + 1, destString.length);
+            j += srcArray[i].length;
+          }
+        }
+      }
+    }
+    return destString;
   }
 
   // Show word result
