@@ -7,7 +7,9 @@ import '../App.css';
 import $ from 'jquery';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { FaRandom, FaTrash, FaFileUpload } from 'react-icons/fa';
+import { BsArrowBarRight, BsArrowReturnLeft, BsArrowLeft, BsArrowRight, BsInfoLg } from 'react-icons/bs';
 
 // Imported components should be started with capital letters: KanjiBlock not kanjiBlock
 import KanjiBlock from '../kanjiBlock';
@@ -15,6 +17,7 @@ import KanjiBlock from '../kanjiBlock';
 const Kanji = (kanjiProps) => {
 
   const [kanjiList, setKanjiList] = useState('');
+  const [showing, setShowing] = useState('');
 
   var vocabDictionary = [];
 
@@ -210,13 +213,15 @@ const Kanji = (kanjiProps) => {
     return newDict;
   }
 
+  const showGuideLine = function () {
+    setShowing(!showing);
+  }
+
   const onLoadHandler = function () {
-    $('.container-fluid').each(element => {
-      $(this).addClass('px-0');
-    });
     $('#correctCount').text("0");
     $('#failedCount').text("0");
   }
+
 
   //#region Rendering
   return (
@@ -243,11 +248,36 @@ const Kanji = (kanjiProps) => {
             <div className="col-md-2 col-sm-2 col-2"></div>
             <div className="col-md-8 col-sm-8 col-8">
               <h2 className="text-center"> KANJI MODE </h2>
-              <div className="text-center">
-                <a href="/" title="Ctrl - gợi ý; Enter - Kiểm tra kết quả; Phím mũi tên - Chuyển ô; Tab - Chuyển ô và Kiếm tra kết quả">Hint.</a>
-              </div>
             </div>
             <div className="col-md-2 col-sm-2 col-2"></div>
+          </div>
+          <div className="guide-area">
+            <div className="guide-button">
+              <button type="button" className="btn-info" onClick={() => showGuideLine()}>
+                <BsInfoLg />
+              </button>
+            </div>
+            <div className="guide-details" style={{ display: (showing ? 'block' : 'none') }}>
+                <div className="row">
+                  <div className="col-md-3 col-sm-3 col-3">
+                    <span className="guide-icon"><BsArrowBarRight />  Tab </span>
+                    <span className="guide-text"> : Next box and show result </span>
+                  </div>
+                  <div className="col-md-3 col-sm-3 col-3">
+                    <span className="guide-icon"><BsArrowReturnLeft />  Enter </span>
+                    <span className="guide-text"> : Next box and show result </span>
+                  </div>
+                  <div className="col-md-3 col-sm-3 col-3">
+                    <span className="guide-icon"><BsArrowLeft />  Left </span>
+                    <span className="guide-text"> : Previous box </span>
+                  </div>
+                  <div className="col-md-3 col-sm-3 col-3">
+                    <span className="guide-icon"><BsArrowRight />  Right </span>
+                    <span className="guide-text"> : Next box </span>
+                  </div>
+                </div>
+            </div>
+
           </div>
           <div className="container-fluid px-0 button-fields" id="buttons-area">
             <div className="row">
@@ -267,20 +297,20 @@ const Kanji = (kanjiProps) => {
                   <input className='form-control-inline' id='total' type="number" min="1" />
                 </div>
                 <div className="col-md-4 col-sm-4 col-4 btn-load-data">
-                  <button type="button" className="btn btn-primary btn-sm btn-warning" onClick={() => loadData()}>
+                  <button type="button" className="btn btn-warning" onClick={() => loadData()}>
                     <FaFileUpload />
                     <span> Load data </span>
                   </button>
                 </div>
               </div>
               <div className="col-md-2 col-sm-2 col-2">
-                <button type="button" className="btn btn-primary btn-sm btn-success" onClick={() => mixKanjiWord()}>
+                <button type="button" className="btn btn-success" onClick={() => mixKanjiWord()}>
                   <FaRandom />
                   <span> Mix Words </span>
                 </button>
               </div>
               <div className="col-md-2 col-sm-2 col-2">
-                <button type="button" className="btn btn-primary btn-sm btn-edit" onClick={() => clearAll()}>
+                <button type="button" className="btn btn-primary" onClick={() => clearAll()}>
                   <FaTrash />
                   <span> Clear All </span>
                 </button>
