@@ -54,22 +54,25 @@ const Kanji = (kanjiProps) => {
     // init data
     $('#correctCount').text("0");
     $('#failedCount').text("0");
-  
+
+    // clear input
+    clearAll();
+
     var _inptNoOfWord = $("#total");
     // jquery
     //    _inptNoOfWord.val()
     // Or _inptNoOfWord[0].val
     var _intNumber = _inptNoOfWord.val();
 
-    importData('file/kanji4-1.txt', _intNumber);
-    //importData('file/test.txt', _intNumber);
+    //importData('file/kanji4-1.txt', _intNumber);
+    importData('file/test.txt', _intNumber);
   }
 
   // Import data from local file
   function importData(fileName, inputNumber) {
     $.get(fileName, function (data, res) {
       vocabDictionary = [];
-
+      var ignoreList = [];
       if (res) {
         var lines = data.split("\r\n");
         for (var i = 0; i < lines.length; i++) {
@@ -81,15 +84,43 @@ const Kanji = (kanjiProps) => {
             wordsObj = {
               "kanji": words[0],
               "romaji": "",
-              "english": splitWords(words[1])
+              "english": splitWords(words[1]),
+              "ignore": ""
             }
           }
           else {
+            // Handle '(' .. ')' --> to be ignored
+            if (words[2].lastIndexOf('(') !== -1 && words[2].lastIndexOf(')') !== -1) {
+
+              // get all Indexes of Open & Close charater
+              var index = 0;
+              var indicesOpen = [];
+              for (index = 0; index < words[2].length; index++) {
+                if (words[2][index] === "(") indicesOpen.push(index);
+              }
+              var indicesClose = [];
+              for (index = 0; index < words[2].length; index++) {
+                if (words[2][index] === ")") indicesClose.push(index);
+              }
+
+              // Get list of ignore phrase
+              // Open and Close charater should have same total
+              for (index = 0; index < indicesOpen.length; index++) {
+                if (index + 1 < indicesOpen.length) {
+                  ignoreList.push((words[2].slice(indicesOpen[index], indicesClose[index] + 1)) + ", ");
+                } else {
+                  ignoreList.push((words[2].slice(indicesOpen[index], indicesClose[index] + 1)));
+                }
+              }
+            }
+
             wordsObj = {
               "kanji": words[0],
               "romaji": words[1],
-              "english": splitWords(words[2])
+              "english": splitWords(words[2]),
+              "ignore": ignoreList
             }
+            ignoreList = [];
           }
 
           // Push to Dictionary
@@ -116,22 +147,22 @@ const Kanji = (kanjiProps) => {
 
     // Slice into new Dictionary w specific number
     var _arrWordDictToDisplay = [];
-    var _intNumber = inputNumber===""? 0 : parseInt(inputNumber);
+    var _intNumber = inputNumber === "" ? 0 : parseInt(inputNumber);
 
-    switch(true){
-      case _intNumber === 0 :{
+    switch (true) {
+      case _intNumber === 0: {
         _arrWordDictToDisplay = _suffledDict;
         break;
       }
-      case _intNumber !== 0 && _intNumber <= vocabDictionary.length :{
+      case _intNumber !== 0 && _intNumber <= vocabDictionary.length: {
         _arrWordDictToDisplay = _suffledDict.slice(0, _intNumber);
         break;
       }
-      case _intNumber !== 0 && _intNumber > vocabDictionary.length :{
+      case _intNumber !== 0 && _intNumber > vocabDictionary.length: {
         _arrWordDictToDisplay = _suffledDict;
         break;
       }
-      default:{
+      default: {
         _arrWordDictToDisplay = _suffledDict;
         break;
       }
@@ -157,7 +188,7 @@ const Kanji = (kanjiProps) => {
     return newDict;
   }
 
-//#region Rendering
+  //#region Rendering
   return (
     <div className="App">
       <header>
@@ -241,7 +272,7 @@ const Kanji = (kanjiProps) => {
             {/* <!-- Kanji list --> */}
             {kanjiList.length !== 0 &&
               kanjiList.map((item, index) =>
-                <KanjiBlock key={index} block={item} onKeyDown={updateResult}/>
+                <KanjiBlock key={index} block={item} onKeyDown={updateResult} />
               )
             }
           </div>
@@ -249,7 +280,7 @@ const Kanji = (kanjiProps) => {
       </div>
     </div>
   );
-//#endregion
+  //#endregion
 }
 
 export default Kanji;

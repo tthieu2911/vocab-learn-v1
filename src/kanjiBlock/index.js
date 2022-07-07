@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const KanjiBlock = (blockProps) => {
 
-  const { kanji, romaji, english } = blockProps.block;
+  const { kanji, romaji, english, ignore } = blockProps.block;
 
   const onEnterWords = function (event) {
     var key = event.keyCode;
@@ -46,38 +46,107 @@ const KanjiBlock = (blockProps) => {
 
   const checkWord = function (input) {
     var _iptElement = $(input);
-    var _value = input.value;
-    var _expectedResult = [];
-    var _arrExpectedResult = [];
-    
+    var _value = input.value.trim();
+    var _strExpectedResult = "";
+    var _arrToVerbExpectedResult = [];
+    var _arrNonToVerbExpectedResult = [];
+
+    var _blResult = false;
+
     if (_value !== "") {
+      // Check result
       // attr() return as String
-      _expectedResult = _iptElement.parent().find('.result_kanji').attr('result').toLowerCase();
-      _arrExpectedResult = _expectedResult.split(",");
+      _strExpectedResult = _iptElement.parent().find('.result_kanji').attr('result').toLowerCase();
 
-      if (_arrExpectedResult.indexOf(_value.toLowerCase()) !== -1) {
-        // input
-        _iptElement.removeClass("text-danger").addClass("text-success");
-        
-        // result
-        _iptElement.parent().find('.result_kanji').removeClass("text-danger").addClass("text-success").text(_expectedResult);
-        
-        // move to next word
-        _iptElement.parent().parent().next().children().eq(1).find('input').focus();
+      var _strNonToVerbResult = _strExpectedResult.slice();
+      var _strToVerbResult = _strExpectedResult.slice();
 
-        // pass success
-        blockProps.onKeyDown("correct");
+      // Handle (V) with "to"
+      if (_strExpectedResult.indexOf("to ") !== -1) {
+        _strNonToVerbResult = _strNonToVerbResult.replace("to ", "");
       }
-      else {
-        _iptElement.removeClass("text-success").addClass("text-danger");
-        _iptElement.parent().find('.result_kanji').removeClass("text-success").addClass("text-danger").text("Failed");
 
-        // pass failed
-        blockProps.onKeyDown("failed");
-      }
+      // Handle ignore list
+      // Return array to be check against input value
+      _arrNonToVerbExpectedResult = finalizeExpectedResult(input,_strNonToVerbResult,_arrNonToVerbExpectedResult);
+      _arrToVerbExpectedResult = finalizeExpectedResult(input,_strToVerbResult,_arrToVerbExpectedResult);
+
+      // Return result
+      _blResult = _arrNonToVerbExpectedResult.indexOf(_value.toLowerCase()) !== -1 
+                  || _arrToVerbExpectedResult.indexOf(_value.toLowerCase()) !== -1;
+
+      // Display result on block
+      displayResult(input, _blResult);
     }
   }
 
+  // Minus sub-string
+  const minusSubString = function (srcArray, destString) {
+    for (var i = 0; i < srcArray.length; i++) {
+      for (var j = 0; j < destString.length; j++) {
+        if (srcArray[i] !== "") {
+          var sliced = destString.slice(j, j + srcArray[i].length);
+          if (sliced === srcArray[i]) {
+            destString = destString.slice(0, j) + destString.slice(j + srcArray[i].length + 1, destString.length);
+            j += srcArray[i].length;
+          }
+        }
+      }
+    }
+    return destString;
+  }
+
+  // Display result on block
+  const displayResult = function (input, result) {
+    var _iptElement = $(input);
+    var _strExpectedResult = _iptElement.parent().find('.result_kanji').attr('result').toLowerCase();
+    
+    if (result) {
+      // input
+      _iptElement.removeClass("text-danger").addClass("text-success");
+
+      // result
+      _iptElement.parent().find('.result_kanji').removeClass("text-danger").addClass("text-success").text(_strExpectedResult);
+
+      // move to next word
+      _iptElement.parent().parent().next().children().eq(1).find('input').focus();
+
+      // pass success to parent
+      blockProps.onKeyDown("correct");
+    }
+    else {
+      _iptElement.removeClass("text-success").addClass("text-danger");
+      _iptElement.parent().find('.result_kanji').removeClass("text-success").addClass("text-danger").text("Failed");
+
+      // pass failed to parent
+      blockProps.onKeyDown("failed");
+    }
+  }
+
+  const finalizeExpectedResult = function(input, srcString, destArray) {
+    var _strIgnore = $(input).parent().find('.ignore-list').text();
+    var _arrTempIgnore = [];
+    if (_strIgnore !== "") {
+      if (_strIgnore.indexOf(",") !== -1) {
+        _arrTempIgnore = _strIgnore.split(",").map(function (item) {
+          return item.trim();
+        });
+      }
+      else {
+        _arrTempIgnore.push(_strIgnore.trim());
+      }
+
+      // Minus ignore list from expected result
+      srcString = minusSubString(_arrTempIgnore, srcString);
+    }
+
+    // Array to be check against input value
+    destArray = srcString.split(",").map(function (item) {
+      return item.trim();
+    });
+
+    return destArray;
+  }
 
   // Show word result
   const showWordResult = function (input) {
@@ -86,7 +155,7 @@ const KanjiBlock = (blockProps) => {
 
     _expectedResult = _iptElement.parent().find('.result_kanji').attr('result');
 
-    _iptElement.parent().find('.result_kanji').removeClass("text-success").addClass("text-danger").text(_expectedResult); 
+    _iptElement.parent().find('.result_kanji').removeClass("text-success").addClass("text-danger").text(_expectedResult);
     _iptElement.val("");
   }
 
@@ -99,13 +168,17 @@ const KanjiBlock = (blockProps) => {
       <div className='kanji_contain'>
         <span>{kanji}</span>
       </div>
-      <div>
-          <span>{romaji}</span>
+      <div className='note-romaji'>
+        <span>{romaji}</span>
       </div>
       <div className='kanji_result_contain'>
-        <div className='kanji_result_contain dvKanjiResult'>
+        <div className='result-english'>
           <span>Result: </span>
           <span className='result_kanji' result={english}></span>
+        </div>
+        <div className='note-english'>
+          <span>Hint:  </span>
+          <span className='ignore-list'>{ignore}</span>
         </div>
         {/* If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `kanjikey` instead. */}
         <input className='form-control' onKeyDown={onEnterWords} onFocus={onFocusChange} />

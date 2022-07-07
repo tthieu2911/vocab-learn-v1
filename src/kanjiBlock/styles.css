@@ -27,6 +27,17 @@
     font-size: 15px;
 }
 
-.dvKanjiResult {
-    height: 40px;
+.result-english {
+    height: 8vh;
+    text-align: left;
+}
+
+.note-romaji {
+    padding-top: 2px;
+    font-size: 100%;
+}
+
+.note-english {
+    text-align: left;
+    font-size: 100%;
 }
