@@ -1,5 +1,9 @@
 # Japanese Kanji LIST 
+https://www.jlptstudy.net/N5/?kanji-list
 https://www.jlptstudy.net/N4/?kanji-list
+https://www.jlptstudy.net/N3/?kanji-list
+https://www.jlptstudy.net/N2/?kanji-list
+https://www.jlptstudy.net/N1/?kanji-list
 
 # Getting Started with Create React App
 
