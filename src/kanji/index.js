@@ -8,8 +8,11 @@ import $ from 'jquery';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { FaRandom, FaTrash, FaFileUpload } from 'react-icons/fa';
+import { FaFileUpload } from 'react-icons/fa';
 import { BsArrowBarRight, BsArrowReturnLeft, BsArrowLeft, BsArrowRight, BsInfoLg } from 'react-icons/bs';
+import {FiRefreshCw} from 'react-icons/fi';
+import {AiOutlineClear} from 'react-icons/ai';
+
 
 // Imported components should be started with capital letters: KanjiBlock not kanjiBlock
 import KanjiBlock from '../kanjiBlock';
@@ -252,9 +255,9 @@ const Kanji = (kanjiProps) => {
             <div className="col-md-2 col-sm-2 col-2"></div>
           </div>
           <div className="guide-area">
-            <div className="guide-button">
+            <div className="hvr-icon-grow-rotate guide-button">
               <button type="button" className="btn-info" onClick={() => showGuideLine()}>
-                <BsInfoLg />
+                <BsInfoLg className="hvr-icon"/>
               </button>
             </div>
             <div className="guide-details" style={{ display: (showing ? 'block' : 'none') }}>
@@ -296,22 +299,22 @@ const Kanji = (kanjiProps) => {
                   No of Words :
                   <input className='form-control-inline' id='total' type="number" min="1" />
                 </div>
-                <div className="col-md-4 col-sm-4 col-4 btn-load-data">
+                <div className="col-md-4 col-sm-4 col-4 hvr-bob hvr-icon-up btn-load-data">
                   <button type="button" className="btn btn-warning" onClick={() => loadData()}>
-                    <FaFileUpload />
+                    <FaFileUpload className="hvr-icon"/>
                     <span> Load data </span>
                   </button>
                 </div>
               </div>
-              <div className="col-md-2 col-sm-2 col-2">
+              <div className="col-md-2 col-sm-2 col-2 hvr-bob hvr-icon-spin btn-mix-words">
                 <button type="button" className="btn btn-success" onClick={() => mixKanjiWord()}>
-                  <FaRandom />
+                  <FiRefreshCw className="hvr-icon"/>
                   <span> Mix Words </span>
                 </button>
               </div>
-              <div className="col-md-2 col-sm-2 col-2">
+              <div className="col-md-2 col-sm-2 col-2 hvr-bob hvr-icon-wobble-horizontal btn-clear-all ">
                 <button type="button" className="btn btn-primary" onClick={() => clearAll()}>
-                  <FaTrash />
+                  <AiOutlineClear className="hvr-icon"/>
                   <span> Clear All </span>
                 </button>
               </div>
