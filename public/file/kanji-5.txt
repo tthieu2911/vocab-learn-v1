@@ -101,12 +101,12 @@
 最先端/さいせんたん/leading edge, at the forefront, ultra-fine (n, adj-no)
 真っ先/まっさき/the head, the foremost, beginning (n)
 先決/せんけつ/previous decision, deciding in advance (n, vs)
-入/ニュウ, ジュ/い.る, -い.る, -い.り, い.れる, -い.れ, はい.る/enter, insert
+入/ニュウ, ジュ, い.る, -い.る, -い.り, い.れる, -い.れ, はい.る/enter, insert
 加入/かにゅう/becoming a member, joining, entry, admission, subscription, affiliation, adherence, signing (n, vs)
 落ち入る/おちいる/to fall, to trap, to cave in, to collapse (v5r, intransitive verb)
 気に入る/きにいる/to be pleased with, to suit (v5r)
-記入 きにゅう entry, filling in of forms (n, vs)
-購入 こうにゅう purchase, buy (n, vs)
+記入/きにゅう/entry, filling in of forms (n, vs)
+購入/こうにゅう/purchase, buy (n, vs)
 八/ハチ/eight, eight radical, 8
 八/や, や.つ, やっ.つ, よう/ eight, eight radical, 8
 八つあたり/やつあたり/outburst of anger (n)

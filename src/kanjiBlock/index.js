@@ -19,7 +19,7 @@ const KanjiBlock = (blockProps) => {
     switch (key) {
       case 13: { //enter
         checkWord(input);
-        _iptElement.parent().parent().next().children().find('input').focus();
+        _iptElement.parents('.kanji_block').next().children().find('input').focus();
         break;
       }
       case 17: {//Ctrl
@@ -31,11 +31,11 @@ const KanjiBlock = (blockProps) => {
         break;
       }
       case 39: { //forward
-        _iptElement.parent().parent().next().children().find('input').focus();
+        _iptElement.parents('.kanji_block').next().children().find('input').focus();
         break;
       }
       case 37: { //backwward
-        _iptElement.parent().parent().prev().children().find('input').focus();
+        _iptElement.parents('.kanji_block').prev().children().find('input').focus();
         break;
       }
       default: {
@@ -68,12 +68,12 @@ const KanjiBlock = (blockProps) => {
 
       // Handle ignore list
       // Return array to be check against input value
-      _arrNonToVerbExpectedResult = finalizeExpectedResult(input,_strNonToVerbResult);
-      _arrToVerbExpectedResult = finalizeExpectedResult(input,_strToVerbResult);
+      _arrNonToVerbExpectedResult = finalizeExpectedResult(input, _strNonToVerbResult);
+      _arrToVerbExpectedResult = finalizeExpectedResult(input, _strToVerbResult);
 
       // Return result
-      _blResult = _arrNonToVerbExpectedResult.indexOf(_value.toLowerCase()) !== -1 
-                  || _arrToVerbExpectedResult.indexOf(_value.toLowerCase()) !== -1;
+      _blResult = _arrNonToVerbExpectedResult.indexOf(_value.toLowerCase()) !== -1
+        || _arrToVerbExpectedResult.indexOf(_value.toLowerCase()) !== -1;
 
       // Display result on block
       displayResult(input, _blResult);
@@ -84,7 +84,7 @@ const KanjiBlock = (blockProps) => {
   const displayResult = function (input, result) {
     var _iptElement = $(input);
     var _strExpectedResult = _iptElement.parent().find('.result_kanji').attr('result').toLowerCase();
-    
+
     if (result) {
       // input
       _iptElement.removeClass("text-danger").addClass("text-success");
@@ -93,7 +93,7 @@ const KanjiBlock = (blockProps) => {
       _iptElement.parent().find('.result_kanji').removeClass("text-danger").addClass("text-success").text(_strExpectedResult);
 
       // move to next word
-      _iptElement.parent().parent().next().children().eq(1).find('input').focus();
+      _iptElement.parents('.kanji_block').next().children().eq(1).find('input').focus();
 
       // pass success to parent
       blockProps.onKeyDown("correct");
@@ -107,7 +107,7 @@ const KanjiBlock = (blockProps) => {
     }
   }
 
-  const finalizeExpectedResult = function(input, srcString) {
+  const finalizeExpectedResult = function (input, srcString) {
     var _strIgnore = $(input).parent().find('.ignore-list').text();
     var _arrTempIgnore = [];
     var _resArray = [];
@@ -133,7 +133,7 @@ const KanjiBlock = (blockProps) => {
     return _resArray;
   }
 
-  
+
   // Minus sub-string
   const minusSubString = function (srcArray, destString) {
     for (var i = 0; i < srcArray.length; i++) {
@@ -162,11 +162,26 @@ const KanjiBlock = (blockProps) => {
   }
 
   const onFocusChange = function (event) {
-    // do nothing
+    // remove others
+    $('.item-selected').removeClass('item-selected');
+
+    // set to current block
+    var _kanjiBlock = $(event.target).parents('.kanji_block');
+    _kanjiBlock.addClass('item-selected');
+  }
+
+  const onKanjiBlockClick = function (event) {
+    // remove others
+    $('.item-selected').removeClass('item-selected');
+
+    var _kanjiBlock = $(event.target).parents('.kanji_block');
+    _kanjiBlock.addClass('item-selected');
+    _kanjiBlock.find('.form-control').focus();
+
   }
 
   return (
-    <div className='col-6 col-md-2 col-sm-3 kanji_block'>
+    <div className='col-6 col-md-2 kanji_block' onClick={onKanjiBlockClick}>
       <div className='kanji_contain'>
         <span>{kanji}</span>
       </div>
