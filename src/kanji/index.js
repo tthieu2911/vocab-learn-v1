@@ -26,19 +26,23 @@ const Kanji = (kanjiProps) => {
   var vocabDictionary = [];
 
   function mixKanjiWord() {
-    // mix Kanji blocks
-    var _blocks = $(".kanji_block");
-    for (var i = 0; i < _blocks.length; i++) {
-      var _target1 = Math.floor(Math.random() * _blocks.length - 1) + 1;
-      var _target2 = Math.floor(Math.random() * _blocks.length - 1) + 1;
-      _blocks.eq(_target1).before(_blocks.eq(_target2));
-    }
+    try {
+      // mix Kanji blocks
+      var _blocks = $(".kanji_block");
+      for (var i = 0; i < _blocks.length; i++) {
+        var _target1 = Math.floor(Math.random() * _blocks.length - 1) + 1;
+        var _target2 = Math.floor(Math.random() * _blocks.length - 1) + 1;
+        _blocks.eq(_target1).before(_blocks.eq(_target2));
+      }
 
-    // reset value
-    $('.kanji_block').each(function () {
-      $(this).find(':input').val("");
-      $(this).find('.result_kanji').html('');
-    });
+      // reset value
+      $('.kanji_block').each(function () {
+        $(this).find(':input').val("");
+        $(this).find('.result_kanji').html('');
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function clearAll() {
@@ -47,123 +51,115 @@ const Kanji = (kanjiProps) => {
   }
 
   var updateResult = function (value) {
-    // value = data passed from Children 's function: onKeyDown = {onEnterWords}
+    try {
+      // value = data passed from Children 's function: onKeyDown = {onEnterWords}
 
-    var _correctInput = $(':input.text-success');
-    var _failedInput = $(':input.text-danger');
+      var _correctInput = $(':input.text-success');
+      var _failedInput = $(':input.text-danger');
 
-    $('#correctCount').text(_correctInput.length);
-    $('#failedCount').text(_failedInput.length);
+      $('#correctCount').text(_correctInput.length);
+      $('#failedCount').text(_failedInput.length);
 
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const loadData = () => {
-    // init data
-    $('#correctCount').text("0");
-    $('#failedCount').text("0");
+    try {
+      // init data
+      $('#correctCount').text("0");
+      $('#failedCount').text("0");
 
-    // clear input
-    clearAll();
+      // clear input
+      clearAll();
 
-    // clear focus
-    $('.item-selected').removeClass('item-selected');
+      // clear focus
+      $('.item-selected').removeClass('item-selected');
 
-    // jquery
-    //    _inptNoOfWord.val()
-    // Or _inptNoOfWord[0].val
-    var _intNumber = $("#total").val();
-    var _intLevel = $("#level option:selected").val();
-    var _strfileName = "";
+      var _intNumber = $("#total").val();
+      var _intLevel = $("#level option:selected").val();
+      var _strfileName = "";
 
-    switch (parseInt(_intLevel)) {
-      case 5:
-        _strfileName = "file/kanji-5.txt";
-        break;
-      case 4:
-        _strfileName = "file/kanji-4.txt";
-        break;
-      case 3:
-        _strfileName = "file/kanji-3.txt";
-        break;
-      case 2:
-        _strfileName = "file/kanji-2.txt";
-        break;
-      case 1:
-        _strfileName = "file/kanji-1.txt";
-        break;
-      default:
-        _strfileName = "file/kanji-5.txt";
-        break;
+      switch (parseInt(_intLevel)) {
+        case 5:
+          _strfileName = "file/kanji-5.txt";
+          break;
+        case 4:
+          _strfileName = "file/kanji-4.txt";
+          break;
+        case 3:
+          _strfileName = "file/kanji-3.txt";
+          break;
+        case 2:
+          _strfileName = "file/kanji-2.txt";
+          break;
+        case 1:
+          _strfileName = "file/kanji-1.txt";
+          break;
+        default:
+          _strfileName = "file/kanji-5.txt";
+          break;
+      }
+
+      // Import data from text file
+      importData(_strfileName, _intNumber);
+
+    } catch (error) {
+      console.log(error);
     }
-
-    // Import data from text file
-    importData(_strfileName, _intNumber);
-
-    //importData('file/kanji4-1.txt', _intNumber);
-    //importData('file/test.txt', _intNumber);
   }
 
   // Import data from local file
   function importData(fileName, inputNumber) {
-    $.get(fileName, function (data, res) {
-      console.log("importData - data");
-      console.log(data);
-      vocabDictionary = [];
-      var ignoreList = [];
-      if (res) {
-        var lines = data.toString().split("\r\n");
-        console.log("importData - lines (1)");
-        console.log(lines);
+    try {
+      $.get(fileName, function (data, res) {
+        vocabDictionary = [];
+        var ignoreList = [];
+        if (res) {
+          var lines = data.toString().replaceAll("\r\n", "\n").split("\n");
 
-        lines = data.toString().split("\r");
-        console.log("importData - lines (2)");
-        console.log(lines);
+          //var lines = data.split("\r\n".charCodeAt(0));
 
-        lines = data.toString().split("\n");
-        console.log("importData - lines (3)");
-        console.log(lines);
-
-        //var lines = data.split("\r\n".charCodeAt(0));
-
-        console.log("importData - lines");
-        console.log(lines);
-
-        for (var i = 0; i < lines.length; i++) {
-          if (lines[i] === "" || lines[i] === undefined) {
-            continue;
-          }
-          var words = lines[i].split("/");
-          var wordsObj = {};
-
-          // Create object words
-          if (words.length === 2) {
-            wordsObj = {
-              "kanji": words[0],
-              "romaji": "",
-              "english": words[1],
-              "ignore": ""
+          for (var i = 0; i < lines.length; i++) {
+            if (lines[i] === "" || lines[i] === undefined) {
+              continue;
             }
-          } else {
-            // Handle '(' .. ')' --> to be ignored
-            ignoreList = hanldeIgnoreList(words[2]);
+            var words = lines[i].split("/");
+            var wordsObj = {};
 
-            wordsObj = {
-              "kanji": words[0],
-              "romaji": words[1],
-              "english": words[2],
-              "ignore": ignoreList
+            // Create object words
+            if (words.length === 2) {
+              wordsObj = {
+                "kanji": words[0],
+                "romaji": "",
+                "english": words[1],
+                "ignore": ""
+              }
+            } else {
+              // Handle '(' .. ')' --> to be ignored
+              ignoreList = hanldeIgnoreList(words[2]);
+
+              wordsObj = {
+                "kanji": words[0],
+                "romaji": words[1],
+                "english": words[2],
+                "ignore": ignoreList
+              }
+              ignoreList = [];
             }
-            ignoreList = [];
+
+            // Push to Dictionary
+            vocabDictionary.push(wordsObj);
+            wordsObj = {};
           }
 
-          // Push to Dictionary
-          vocabDictionary.push(wordsObj);
-          wordsObj = {};
+          displayWord(inputNumber);
         }
-
-        displayWord(inputNumber);
-      }
-    });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function hanldeIgnoreList(srcString) {
@@ -193,7 +189,6 @@ const Kanji = (kanjiProps) => {
         }
       }
     } catch (error) {
-      console.log(srcString);
       console.log(error);
     }
 
@@ -201,85 +196,84 @@ const Kanji = (kanjiProps) => {
   }
 
   function displayWord(inputNumber) {
-    // Suffle imported dictionary
-    var _suffledDict = suffleDictionary(vocabDictionary);
+    try {
+      // Suffle imported dictionary
+      var _suffledDict = suffleDictionary(vocabDictionary);
 
-    // Slice into new Dictionary w specific number
-    var _arrWordDictToDisplay = [];
-    var _intNumber = inputNumber === "" ? 0 : parseInt(inputNumber);
+      // Slice into new Dictionary w specific number
+      var _arrWordDictToDisplay = [];
+      var _intNumber = inputNumber === "" ? 0 : parseInt(inputNumber);
 
-    switch (true) {
-      case _intNumber === 0: {
-        _arrWordDictToDisplay = _suffledDict;
-        break;
+      switch (true) {
+        case _intNumber === 0: {
+          _arrWordDictToDisplay = _suffledDict;
+          break;
+        }
+        case _intNumber !== 0 && _intNumber <= vocabDictionary.length: {
+          _arrWordDictToDisplay = _suffledDict.slice(0, _intNumber);
+          break;
+        }
+        case _intNumber !== 0 && _intNumber > vocabDictionary.length: {
+          _arrWordDictToDisplay = _suffledDict;
+          break;
+        }
+        default: {
+          _arrWordDictToDisplay = _suffledDict;
+          break;
+        }
       }
-      case _intNumber !== 0 && _intNumber <= vocabDictionary.length: {
-        _arrWordDictToDisplay = _suffledDict.slice(0, _intNumber);
-        break;
-      }
-      case _intNumber !== 0 && _intNumber > vocabDictionary.length: {
-        _arrWordDictToDisplay = _suffledDict;
-        break;
-      }
-      default: {
-        _arrWordDictToDisplay = _suffledDict;
-        break;
-      }
+
+      // Create Kanji list
+      setKanjiList(_arrWordDictToDisplay);
+
+    } catch (error) {
+      console.log(error);
     }
-
-    console.log("displayWord");
-    console.log(_arrWordDictToDisplay);
-
-    // Create Kanji list
-    setKanjiList(_arrWordDictToDisplay);
   }
 
   function suffleDictionary(inputDict) {
     var newDict = inputDict.slice();
-    var currIndex = inputDict.length, tmpItems, randIndex;
+    try {
+      var currIndex = inputDict.length, tmpItems, randIndex;
 
-    while (0 !== currIndex) {
-      // Get random index
-      randIndex = Math.floor(Math.random() * currIndex);
-      currIndex -= 1;
-      // swap items
-      tmpItems = newDict[currIndex];
-      newDict[currIndex] = newDict[randIndex];
-      newDict[randIndex] = tmpItems;
+      while (0 !== currIndex) {
+        // Get random index
+        randIndex = Math.floor(Math.random() * currIndex);
+        currIndex -= 1;
+        // swap items
+        tmpItems = newDict[currIndex];
+        newDict[currIndex] = newDict[randIndex];
+        newDict[randIndex] = tmpItems;
+      }
+    } catch (error) {
+      console.log(error);
     }
     return newDict;
   }
 
   const showGuideLine = function (event) {
-    setShowing(!showing);
+    try {
+      setShowing(!showing);
 
-    var _element = $(event.target)
+      var _element = $(event.target)
 
-    if (!showing) {
-      _element.parents('.App').find('.body').addClass('blur-filter');
-      // $(".guide-details").popup({
-      //   dismissible: false,
-      //   history: false,
-      //   theme: "b",
-      //   /* or a */
-      //   positionTo: "window",
-      //   overlayTheme: "b",
-      //   /* "b" is recommended for overlay */
-      //   transition: "pop"
-      // }).popup("open");
-
-    } else {
-      // _element.parents('.App').find('.App-header').removeClass('blur-filter');
-      // _element.parents('.App').find('#kanji_div').removeClass('blur-filter');
-      // _element.parents('.App').find('#kanji_area').removeClass('blur-filter');
-
-      _element.parents('.App').find('.body').removeClass('blur-filter');
+      if (!showing) {
+        _element.parents('.App').find('.body').addClass('blur-filter');
+      } else {
+        _element.parents('.App').find('.body').removeClass('blur-filter');
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
   const onLoadHandler = function () {
-    $('#correctCount').text("0");
-    $('#failedCount').text("0");
+    try {
+      $('#correctCount').text("0");
+      $('#failedCount').text("0");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
