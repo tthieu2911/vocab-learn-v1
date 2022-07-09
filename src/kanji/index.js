@@ -299,7 +299,7 @@ const Kanji = (kanjiProps) => {
         </div>
       </div>
       <div className="body">
-        <div className="container-fluid">
+        <div className="container-fluid" id="header_div">
           <div className="container-fluid px-0 App-header" >
             <div className="row">
               <div className="col-md-2 col-sm-2 col-2"></div>
@@ -343,7 +343,7 @@ const Kanji = (kanjiProps) => {
                       <option value="1">N1</option>
                     </select>
                   </div>
-                  <div className="col-md-4 col-sm-4 col-4 no-of-words">
+                  <div className="col-md-4 col-sm-4 col-4 no-of-words" >
                     No of Words :
                     <input className='form-control-inline' id='total' type="number" min="1" />
                   </div>
@@ -391,7 +391,7 @@ const Kanji = (kanjiProps) => {
           </div>
         </div>
 
-        <div className="container-fluid px-0 ">
+        <div className="container-fluid" id="kanji_area_div">
           <hr />
           <div id="kanji_area">
             <div className="row">

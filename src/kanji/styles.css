@@ -24,10 +24,15 @@ h1 {
   box-shadow: 5px 5px 5px lightblue;
 }
 
+#kanji_area_div {
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
 #kanji_area {
   margin-top: auto;
-  padding-left: 2%;
-  padding-right: 2%;
+  padding-left: 1%;
+  padding-right: 1%;
   max-height: 68vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -156,6 +161,7 @@ h1 {
 .load-data-criteria {
   align-items: center;
   vertical-align: middle;
+  word-wrap: break-word;
 }
 
 .load-data-criteria.no-of-words {
