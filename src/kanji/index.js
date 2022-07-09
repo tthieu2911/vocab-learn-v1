@@ -106,12 +106,14 @@ const Kanji = (kanjiProps) => {
   // Import data from local file
   function importData(fileName, inputNumber) {
     $.get(fileName, function (data, res) {
+      console.log("importData - data");
+      console.log(data);
       vocabDictionary = [];
       var ignoreList = [];
       if (res) {
         var lines = data.split("\r\n");
 
-        console.log("importData");
+        console.log("importData - lines");
         console.log(lines);
 
         for (var i = 0; i < lines.length; i++) {
