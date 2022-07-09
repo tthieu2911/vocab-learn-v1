@@ -110,6 +110,10 @@ const Kanji = (kanjiProps) => {
       var ignoreList = [];
       if (res) {
         var lines = data.split("\r\n");
+
+        console.log("importData");
+        console.log(lines);
+
         for (var i = 0; i < lines.length; i++) {
           if (lines[i] === "" || lines[i] === undefined) {
             continue;
@@ -208,6 +212,9 @@ const Kanji = (kanjiProps) => {
         break;
       }
     }
+
+    console.log("displayWord");
+    console.log(_arrWordDictToDisplay);
 
     // Create Kanji list
     setKanjiList(_arrWordDictToDisplay);

@@ -11,6 +11,9 @@ const KanjiBlock = (blockProps) => {
 
   const { kanji, romaji, english, ignore } = blockProps.block;
 
+  console.log("KanjiBlock");
+  console.log(blockProps.block);
+
   const onEnterWords = function (event) {
     var key = event.keyCode;
     var input = event.target;
