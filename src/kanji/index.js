@@ -111,7 +111,11 @@ const Kanji = (kanjiProps) => {
       vocabDictionary = [];
       var ignoreList = [];
       if (res) {
-        var lines = data.split("\n");
+        var lines = data.toString().split("\r\n");
+
+        //var lines = data.split("\r\n".charCodeAt(0));
+
+        console.log("\r\n".charCodeAt(0));
 
         console.log("importData - lines");
         console.log(lines);
