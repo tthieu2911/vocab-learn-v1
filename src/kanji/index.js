@@ -112,10 +112,18 @@ const Kanji = (kanjiProps) => {
       var ignoreList = [];
       if (res) {
         var lines = data.toString().split("\r\n");
+        console.log("importData - lines (1)");
+        console.log(lines);
+
+        lines = data.toString().split("\r");
+        console.log("importData - lines (2)");
+        console.log(lines);
+
+        lines = data.toString().split("\n");
+        console.log("importData - lines (3)");
+        console.log(lines);
 
         //var lines = data.split("\r\n".charCodeAt(0));
-
-        console.log("\r\n".charCodeAt(0));
 
         console.log("importData - lines");
         console.log(lines);
