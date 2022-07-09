@@ -12,6 +12,7 @@ import { FaFileUpload } from 'react-icons/fa';
 import { BsArrowsMove, BsArrowBarRight, BsArrowReturnLeft, BsArrowLeft, BsArrowRight, BsInfoLg } from 'react-icons/bs';
 import { FiRefreshCw } from 'react-icons/fi';
 import { AiOutlineClear } from 'react-icons/ai';
+import { FiDelete } from 'react-icons/fi';
 
 
 // Imported components should be started with capital letters: KanjiBlock not kanjiBlock
@@ -228,8 +229,31 @@ const Kanji = (kanjiProps) => {
     return newDict;
   }
 
-  const showGuideLine = function () {
+  const showGuideLine = function (event) {
     setShowing(!showing);
+
+    var _element = $(event.target)
+
+    if (!showing) {
+      _element.parents('.App').find('.body').addClass('blur-filter');
+      // $(".guide-details").popup({
+      //   dismissible: false,
+      //   history: false,
+      //   theme: "b",
+      //   /* or a */
+      //   positionTo: "window",
+      //   overlayTheme: "b",
+      //   /* "b" is recommended for overlay */
+      //   transition: "pop"
+      // }).popup("open");
+
+    } else {
+      // _element.parents('.App').find('.App-header').removeClass('blur-filter');
+      // _element.parents('.App').find('#kanji_div').removeClass('blur-filter');
+      // _element.parents('.App').find('#kanji_area').removeClass('blur-filter');
+
+      _element.parents('.App').find('.body').removeClass('blur-filter');
+    }
   }
 
   const onLoadHandler = function () {
@@ -243,137 +267,145 @@ const Kanji = (kanjiProps) => {
     <div className="App" onLoad={onLoadHandler}>
       <header>
       </header>
-      <div className="container-fluid">
-        <div className="container-fluid px-0 App-header" >
-          <div className="row">
-            <div className="col-md-2 col-sm-2 col-2"></div>
-            <div className="col-md-8 col-sm-8 col-8 row" >
-              <div className="col-md-4 col-sm-4 col-4"><img src={logo} className="App-logo" alt="logo" /></div>
-              <div className="col-md-4 col-sm-4 col-4" align-text="left"><h1>LEARNING</h1></div>
-              <div className="col-md-4 col-sm-4 col-4"></div>
+      <div className="popup-modal-field">
+        <div className="guide-details px-0" style={{ display: (showing ? 'block' : 'none') }}>
+          <div className="guide-details-header">
+            <span className="hvr-grow hvr-icon " onClick={showGuideLine} ><FiDelete /></span>
+          </div>
+          <div className="row guide-details-content">
+            <div className="col-md-2 col-sm-6 col-6">
+              <span className="guide-icon hvr-grow"><BsArrowsMove />  Ctrl </span>
+              <span className="guide-text"> Show result </span>
             </div>
-            <div className="col-md-2 col-sm-2 col-2"></div>
+            <div className="col-md-5 col-sm-6 col-6">
+              <span className="guide-icon hvr-grow"><BsArrowBarRight />  Tab </span>
+              <span> or </span>
+              <span className="guide-icon hvr-grow"><BsArrowReturnLeft />  Enter </span>
+              <span className="guide-text"> Check result </span>
+            </div>
+            <div className="col-md-5 col-sm-4 col-4 px-0">
+              <div className="row px-0">
+                <div className="col-md-6 col-sm-6 col-6">
+                  <span className="guide-icon hvr-grow"><BsArrowLeft />  Left </span>
+                  <span className="guide-text"> Previous box </span>
+                </div>
+                <div className="col-md-6 col-sm-6 col-6">
+                  <span className="guide-icon hvr-grow"><BsArrowRight />  Right </span>
+                  <span className="guide-text"> Next box </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="container-fluid" id="kanji_div" >
-        <div className="container-fluid px-0" id="kanji_header">
-          <div className="row">
-            <div className="col-md-2 col-sm-2 col-2"></div>
-            <div className="col-md-8 col-sm-8 col-8">
-              <h2 className="text-center"> KANJI MODE </h2>
+      <div className="body">
+        <div className="container-fluid">
+          <div className="container-fluid px-0 App-header" >
+            <div className="row">
+              <div className="col-md-2 col-sm-2 col-2"></div>
+              <div className="col-md-8 col-sm-8 col-8 row" >
+                <div className="col-md-4 col-sm-4 col-4"><img src={logo} className="App-logo" alt="logo" /></div>
+                <div className="col-md-4 col-sm-4 col-4" align-text="left"><h1>LEARNING</h1></div>
+                <div className="col-md-4 col-sm-4 col-4"></div>
+              </div>
+              <div className="col-md-2 col-sm-2 col-2"></div>
             </div>
-            <div className="col-md-2 col-sm-2 col-2"></div>
           </div>
-          <div className="guide-area">
-            <div className="guide-button">
-              <button type="button" className="btn-info-cus" title="Help" onClick={showGuideLine}>
-                <BsInfoLg />
-              </button>
+        </div>
+
+        <div className="container-fluid" id="kanji_div" >
+          <div className="container-fluid px-0" id="kanji_header">
+            <div className="row">
+              <div className="col-md-2 col-sm-2 col-2"></div>
+              <div className="col-md-8 col-sm-8 col-8">
+                <h2 className="text-center"> KANJI MODE </h2>
+              </div>
+              <div className="col-md-2 col-sm-2 col-2"></div>
             </div>
-            <div className="guide-details px-0" style={{ display: (showing ? 'block' : 'none') }}>
-              <div className="row ">
-                <div className="col-md-2 col-sm-6 col-6">
-                  <span className="guide-icon hvr-grow"><BsArrowsMove />  Ctrl </span>
-                  <span className="guide-text"> Show result </span>
+            <div className="guide-area">
+              <div className="guide-button">
+                <button type="button" className="toggle-button btn-info-cus" title="Help" onClick={showGuideLine}>
+                  <BsInfoLg />
+                </button>
+              </div>
+
+            </div>
+            <div className="container-fluid px-0 button-fields" id="buttons-area">
+              <div className="row px-0">
+                <div className="col-md-6 col-sm-12 col-12 row load-data-criteria">
+                  <div className="col-md-4 col-sm-4 col-4 level-select">
+                    Level :
+                    <select id="level">
+                      <option value="5">N5</option>
+                      <option value="4">N4</option>
+                      <option value="3">N3</option>
+                      <option value="2">N2</option>
+                      <option value="1">N1</option>
+                    </select>
+                  </div>
+                  <div className="col-md-4 col-sm-4 col-4 no-of-words">
+                    No of Words :
+                    <input className='form-control-inline' id='total' type="number" min="1" />
+                  </div>
+                  <div className="col-md-4 col-sm-4 col-4 hvr-bob hvr-icon-up btn-load-data">
+                    <button type="button" className="btn btn-warning" onClick={() => loadData()}>
+                      <FaFileUpload className="hvr-icon" />
+                      <span> Load data </span>
+                    </button>
+                  </div>
                 </div>
-                <div className="col-md-4 col-sm-6 col-6">
-                  <span className="guide-icon hvr-grow"><BsArrowBarRight />  Tab </span>
-                  <span> or </span>
-                  <span className="guide-icon hvr-grow"><BsArrowReturnLeft />  Enter </span>
-                  <span className="guide-text"> Check result </span>
-                </div>
-                <div className="col-md-5 col-sm-4 col-4 px-0">
-                  <div className="row px-0">
-                    <div className="col-md-6 col-sm-6 col-6">
-                      <span className="guide-icon hvr-grow"><BsArrowLeft />  Left </span>
-                      <span className="guide-text"> Previous box </span>
+                <div className="col-md-6 col-sm-12 col-12 row">
+                  <div className="col-md-4 col-sm-4 col-4 hvr-bob hvr-icon-spin btn-mix-words">
+                    <button type="button" className="btn btn-success" onClick={() => mixKanjiWord()}>
+                      <FiRefreshCw className="hvr-icon" />
+                      <span> Mix Words </span>
+                    </button>
+                  </div>
+                  <div className="col-md-4 col-sm-4 col-4 hvr-bob hvr-icon-wobble-horizontal btn-clear-all ">
+                    <button type="button" className="btn btn-primary" onClick={() => clearAll()}>
+                      <AiOutlineClear className="hvr-icon" />
+                      <span> Clear All </span>
+                    </button>
+                  </div>
+                  <div className="col-md-4 col-sm-4 col-4 px-0">
+                    <div className="row">
+                      <div className="col-md-6 col-sm-6 col-6 test-result">
+                        <span className="text-success">Correct</span>
+                      </div>
+                      <div className="col-md-6 col-sm-6 col-6 test-count">
+                        <span id="correctCount"></span>
+                      </div>
                     </div>
-                    <div className="col-md-6 col-sm-6 col-6">
-                      <span className="guide-icon hvr-grow"><BsArrowRight />  Right </span>
-                      <span className="guide-text"> Next box </span>
+                    <div className="row">
+                      <div className="col-md-6 col-sm-6 col-6 test-result">
+                        <span className="text-danger">Failed</span>
+                      </div>
+                      <div className="col-md-6 col-sm-6 col-6 test-count">
+                        <span id="failedCount"></span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="container-fluid px-0 button-fields" id="buttons-area">
-            <div className="row px-0">
-              <div className="col-md-6 col-sm-12 col-12 row load-data-criteria">
-                <div className="col-md-4 col-sm-4 col-4 level-select">
-                  Level :
-                  <select id="level">
-                    <option value="5">N5</option>
-                    <option value="4">N4</option>
-                    <option value="3">N3</option>
-                    <option value="2">N2</option>
-                    <option value="1">N1</option>
-                  </select>
-                </div>
-                <div className="col-md-4 col-sm-4 col-4 no-of-words">
-                  No of Words :
-                  <input className='form-control-inline' id='total' type="number" min="1" />
-                </div>
-                <div className="col-md-4 col-sm-4 col-4 hvr-bob hvr-icon-up btn-load-data">
-                  <button type="button" className="btn btn-warning" onClick={() => loadData()}>
-                    <FaFileUpload className="hvr-icon" />
-                    <span> Load data </span>
-                  </button>
-                </div>
-              </div>
-              <div className="col-md-6 col-sm-12 col-12 row">
-                <div className="col-md-4 col-sm-4 col-4 hvr-bob hvr-icon-spin btn-mix-words">
-                  <button type="button" className="btn btn-success" onClick={() => mixKanjiWord()}>
-                    <FiRefreshCw className="hvr-icon" />
-                    <span> Mix Words </span>
-                  </button>
-                </div>
-                <div className="col-md-4 col-sm-4 col-4 hvr-bob hvr-icon-wobble-horizontal btn-clear-all ">
-                  <button type="button" className="btn btn-primary" onClick={() => clearAll()}>
-                    <AiOutlineClear className="hvr-icon" />
-                    <span> Clear All </span>
-                  </button>
-                </div>
-                <div className="col-md-4 col-sm-4 col-4 px-0">
-                  <div className="row">
-                    <div className="col-md-6 col-sm-6 col-6 test-result">
-                      <span className="text-success">Correct</span>
-                    </div>
-                    <div className="col-md-6 col-sm-6 col-6 test-count">
-                      <span id="correctCount"></span>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 col-sm-6 col-6 test-result">
-                      <span className="text-danger">Failed</span>
-                    </div>
-                    <div className="col-md-6 col-sm-6 col-6 test-count">
-                      <span id="failedCount"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        </div>
 
+        <div className="container-fluid px-0 ">
+          <hr />
+          <div id="kanji_area">
+            <div className="row">
+              {/* <!-- Kanji list --> */}
+              {kanjiList.length !== 0 &&
+                kanjiList.map((item, index) =>
+                  <KanjiBlock key={index} block={item} onKeyDown={updateResult} />
+                )
+              }
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container-fluid px-0 ">
-        <hr />
-        <div id="kanji_area">
-          <div className="row">
-            {/* <!-- Kanji list --> */}
-            {kanjiList.length !== 0 &&
-              kanjiList.map((item, index) =>
-                <KanjiBlock key={index} block={item} onKeyDown={updateResult} />
-              )
-            }
-          </div>
-        </div>
-      </div>
     </div>
   );
   //#endregion

@@ -11,7 +11,7 @@ h1 {
 
 #kanji_header {
   /* background-color: rgb(86, 198, 217); */
-  padding-top: 1vh;
+  padding-top: 3px;
   min-height: 16vh;
   color: black;
   position: -webkit-sticky;
@@ -35,8 +35,8 @@ h1 {
 }
 
 .guide-area {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   align-items: center;
   text-align: center;
   vertical-align: middle;
@@ -44,7 +44,7 @@ h1 {
 }
 
 .guide-button {
-  min-height: 50px;
+  min-height: 30px;
 }
 
 .btn-info-cus {
@@ -57,20 +57,46 @@ h1 {
 }
 
 .guide-details {
-  position: absolute;
-  top: 5%;
-  left: 0.2%;
+  top: 30%;
+  left: 30%;
   transform: translate(-50%, -50%);
-  max-width: 40%;
-  width: auto;
-  height: 100px;
-  text-align: center;
-  background-color: transparent;
-  box-sizing: border-box;
-  padding: 10px;
+  max-width: 35%;
+  height: auto;
+  background-color: darkblue;
+
+  /* Hanlde no to be blurred */
+  filter: blur(0px);
+  position: fixed;
+  /* position: absolute; /*NOt USE THIS */
+  z-index: 99999;
+}
+
+.guide-details-header {
+  min-height: 25px;
+  min-width: 35px;
+  border-radius: 10px;
+  background-color: darkblue;
+  box-shadow: 5px 1px 5px lightblue;
+  color: white;
+  position: fixed;
+  margin-left: 98%;
+  margin-top: -3%;
+}
+
+.guide-details-header span{
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 3px;
+}
+
+.guide-details-content{
+  background-color: white;
+  padding: 15px;
   border-radius: 10px;
   border: 1px solid darkblue;
+  border-top: 8px solid darkblue;
   box-shadow: 5px 5px 5px lightblue;
+
 }
 
 @media (prefers-reduced-motion: no-preference) {
