@@ -1,0 +1,231 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #c0c0c0;
+}
+.Animated-Heart-Beat-div{
+  margin: 25%;
+}
+.flex-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.heart {
+  position: relative;
+  font-size: 0;
+  width: 138px;
+}
+.heart-piece-0 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 0px;
+  background-color: #f00;
+  animation-name: piece-0;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+}
+@keyframes piece-0 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 30px;
+    top: -15px;
+ }
+}
+.heart-piece-1 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 16px;
+  background-color: #f00;
+  animation-name: piece-1;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.15s;
+}
+@keyframes piece-1 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 60px;
+    top: -31px;
+ }
+}
+.heart-piece-2 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 32px;
+  background-color: #f00;
+  animation-name: piece-2;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.3s;
+}
+@keyframes piece-2 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 80px;
+    top: -37px;
+ }
+}
+.heart-piece-3 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 48px;
+  background-color: #f00;
+  animation-name: piece-3;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.45s;
+}
+@keyframes piece-3 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 90px;
+    top: -31px;
+ }
+}
+.heart-piece-4 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 64px;
+  background-color: #f00;
+  animation-name: piece-4;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.6s;
+}
+@keyframes piece-4 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 94px;
+    top: -23px;
+ }
+}
+.heart-piece-5 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 80px;
+  background-color: #f00;
+  animation-name: piece-5;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.75s;
+}
+@keyframes piece-5 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 90px;
+    top: -31px;
+ }
+}
+.heart-piece-6 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 96px;
+  background-color: #f00;
+  animation-name: piece-6;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.9s;
+}
+@keyframes piece-6 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 80px;
+    top: -37px;
+ }
+}
+.heart-piece-7 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 112px;
+  background-color: #f00;
+  animation-name: piece-7;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 1.05s;
+}
+@keyframes piece-7 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 60px;
+    top: -31px;
+ }
+}
+.heart-piece-8 {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  left: 128px;
+  background-color: #f00;
+  animation-name: piece-8;
+  animation-duration: 3.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 1.2s;
+}
+@keyframes piece-8 {
+  0%, 10%, 90%, 100% {
+    height: 10px;
+    top: -5px;
+ }
+  45%, 55% {
+    height: 30px;
+    top: -15px;
+ }
+}

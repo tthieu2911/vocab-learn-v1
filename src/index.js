@@ -4,16 +4,14 @@ import reportWebVitals from './reportWebVitals';
 
 // CSS
 import './index.css';
-// JS
-import Kanji from './kanji'
 
 // Default
-// import App from './App';
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Kanji />
+    <App />
   </React.StrictMode>
 );
 

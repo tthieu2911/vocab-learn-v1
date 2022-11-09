@@ -1,0 +1,36 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: fantasy;
+}
+.Animated-Heart-div{
+  margin: 24vh;
+}
+
+.stroke {
+  transform: scale(0.99);
+  stroke-dasharray: 2090;
+  stroke-dashoffset: 2090;
+  animation: draw 7s linear both infinite, fade 2s ease-in-out forwards infinite;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 2090;
+  }
+
+  50% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: 2090;
+  }
+}
+
+@keyframes fade {
+  to {
+    opacity: 0.8;
+  }
+}
